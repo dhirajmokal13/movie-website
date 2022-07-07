@@ -49,13 +49,13 @@
             <p class="card-text" id="dvd"><span class="text-success">DVD</span>: </p>
             <p class="card-text" id="director"><span class="text-success">Director</span>: </p>
             <p class="card-text" id="metascore"><span class="text-success">Metascore</span>: </p>
-            <p class="card-text" id="plot"><span class="text-success">Plot</span>: </p>
             <p class="card-text" id="production"><span class="text-success">Production</span>: </p>
             <p class="card-text" id="website"><span class="text-success">Website</span>: </p>
             <p class="card-text" id="writer"><span class="text-success">Writer</span>: </p>
             <p class="card-text" id="rating"><span class="text-success">Imdb Rating</span>: </p>
             <p class="card-text" id="votes"><span class="text-success">Imdb Votes</span>: </p>
             <p class="card-text" id="ratings"><span class="text-success">Rating</span>: </p>
+            <p class="card-text" id="plot"><span class="text-success">Plot</span>: </p>
         </div>
     </div>
 </div>
@@ -70,7 +70,7 @@
         }
         let url = new URL(window.location.href);
         let movie_id = url.searchParams.get("movie-id");
-        fetch(`http://www.omdbapi.com/?apikey=4034acde&i=${movie_id}`).then(res => res.json()).
+        fetch(`http://www.omdbapi.com/?apikey=4034acde&i=${movie_id}&plot=full`).then(res => res.json()).
             then(data => {
                 if (data["Poster"] === "N/A") {
                     data["Poster"] = 'https://previews.123rf.com/images/kaymosk/kaymosk1804/kaymosk180400006/100130939-error-404-page-not-found-error-with-glitch-effect-on-screen-vector-illustration-for-your-design-.jpg';
