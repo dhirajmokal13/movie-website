@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <title>Document</title>
+</head>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Movie Data</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" id="movie" placeholder="Search">
+                <button class="btn btn-outline-success" id="search">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div id="result" class="container"></div>
+
+<body>
+    <script>
+        document.getElementById("search").addEventListener("click", (e) => {
+            e.preventDefault();
+            let movie = document.getElementById("movie").value;
+            fetch(`http://www.omdbapi.com/?apikey=4034acde&s=${movie}`).then(res => res.json())
+                .then(data => {
+                    if (data["Response"] === "True") {
+                        let result = "";
+                        for (i = 0; i < data["Search"].length; i++) {
+                            if (i % 3 === 0) {
+                                result += `<div class="row my-2">`;
+                            }
+                            result += `<div class="col"><div class="card" style="width: 18rem;">
+                                   <img src="${data["Search"][i]["Poster"]}" alt="Image not Found" class="card-img-top">
+                                   <div class="card-body">
+                                     <h5 class="card-title" title="Name of the movie">${data["Search"][i]["Title"]}</h5>
+                                     <p class="card-text" title=Realease of the movie">${data["Search"][i]["Year"]}</p>
+                                     <p class="card-text" title="Type of the Content">${data["Search"][i]["Type"]}</p>
+                                     <p class="card-text" title="Imdb Id">${data["Search"][i]["imdbID"]}</p>
+                                   </div>
+                                   </div></div>`;
+                            if (i % 3 === 2) {
+                                result += `</div>`;
+                            }
+                        }
+                        document.getElementById("result").innerHTML = result;
+                    } else {
+                        swal("Error", "Data not found", "error");
+                    }
+                }).catch(err => console.error(err));
+        })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
