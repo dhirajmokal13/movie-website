@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <title>Movies Database</title>
+</head>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/movie.html">Movie Details</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/movie.html">Home</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" placeholder="Search Movie">
+                <button class="btn btn-outline-success" id="search">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container d-flex align-items-center justify-content-center my-4">
+    <div class="card"
+        style="width: 24rem; box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
+        <img src="" id="Poster" class="card-img-top" alt="Image not found">
+        <div class="card-body">
+            <h5 class="card-title" id="title"></h5>
+            <p class="card-text" id="ryear"><span class="text-success">Released</span>: </p>
+            <p class="card-text" id="type"><span class="text-success">Type</span>: </p>
+            <p class="card-text" id="genre"><span class="text-success">Genre</span>: </p>
+            <p class="card-text" id="rtime"><span class="text-success">Run Time</span>: </p>
+            <p class="card-text" id="lang"><span class="text-success">Languages</span>: </p>
+            <p class="card-text" id="rated"><span class="text-success">Rated</span>: </p>
+            <p class="card-text" id="actors"><span class="text-success">Actors</span>: </p>
+            <p class="card-text" id="awards"><span class="text-success">Awards</span>: </p>
+            <p class="card-text" id="coll"><span class="text-success">Boxoffice</span>: </p>
+            <p class="card-text" id="country"><span class="text-success">Country</span>: </p>
+            <p class="card-text" id="dvd"><span class="text-success">DVD</span>: </p>
+            <p class="card-text" id="director"><span class="text-success">Director</span>: </p>
+            <p class="card-text" id="metascore"><span class="text-success">Metascore</span>: </p>
+            <p class="card-text" id="plot"><span class="text-success">Plot</span>: </p>
+            <p class="card-text" id="production"><span class="text-success">Production</span>: </p>
+            <p class="card-text" id="website"><span class="text-success">Website</span>: </p>
+            <p class="card-text" id="writer"><span class="text-success">Writer</span>: </p>
+            <p class="card-text" id="rating"><span class="text-success">Imdb Rating</span>: </p>
+            <p class="card-text" id="votes"><span class="text-success">Imdb Votes</span>: </p>
+            <p class="card-text" id="ratings"><span class="text-success">Rating</span>: </p>
+        </div>
+    </div>
+</div>
+
+<body>
+    <script>
+        function idSelect(se) {
+            return document.getElementById(se);
+        }
+        function addText(txt) {
+            return document.createTextNode(txt);
+        }
+        let url = new URL(window.location.href);
+        let movie_id = url.searchParams.get("movie-id");
+        fetch(`http://www.omdbapi.com/?apikey=4034acde&i=${movie_id}`).then(res => res.json()).
+            then(data => {
+                if (data["Poster"] === "N/A") {
+                    data["Poster"] = 'https://previews.123rf.com/images/kaymosk/kaymosk1804/kaymosk180400006/100130939-error-404-page-not-found-error-with-glitch-effect-on-screen-vector-illustration-for-your-design-.jpg';
+                }
+                idSelect("Poster").src = data["Poster"];
+                idSelect("title").innerHTML = data["Title"];
+                idSelect("ryear").appendChild(addText(data["Released"]));
+                idSelect("type").appendChild(addText(data["Type"]));
+                idSelect("genre").appendChild(addText(data["Genre"]));
+                idSelect("rated").appendChild(addText(data["Rated"]));
+                idSelect("rtime").appendChild(addText(data["Runtime"]));
+                idSelect("lang").appendChild(addText(data["Language"]));
+                idSelect("actors").appendChild(addText(data["Actors"]));
+                idSelect("awards").appendChild(addText(data["Awards"]));
+                idSelect("coll").appendChild(addText(data["BoxOffice"]));
+                idSelect("country").appendChild(addText(data["Country"]));
+                idSelect("dvd").appendChild(addText(data["DVD"]));
+                idSelect("director").appendChild(addText(data["Director"]));
+                idSelect("metascore").appendChild(addText(data["Metascore"]));
+                idSelect("plot").appendChild(addText(data["Plot"]));
+                idSelect("production").appendChild(addText(data["Production"]));
+                idSelect("website").appendChild(addText(data["Website"]));
+                idSelect("writer").appendChild(addText(data["Writer"]));
+                idSelect("rating").appendChild(addText(data["imdbRating"] + "/10"));
+                idSelect("votes").appendChild(addText(data["imdbVotes"]));
+                for (i = 0; i < data["Ratings"].length; i++) {
+                    let Rating = data["Ratings"][i]["Source"] + " " + data["Ratings"][i]["Value"];
+                    idSelect("ratings").appendChild(addText(Rating + "   "));
+                }
+            }).catch(err => {
+                console.error(err);
+            })
+        idSelect("search").addEventListener("click", (e) => {
+            e.preventDefault();
+            window.location.href = "/movie.html";
+        })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
