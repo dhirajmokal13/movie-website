@@ -38,19 +38,20 @@
             <h5 class="card-title" id="title"></h5>
             <p class="card-text" id="ryear"><span class="text-success">Released</span>: </p>
             <p class="card-text" id="type"><span class="text-success">Type</span>: </p>
+            <p class="card-text" id="totalSeasons"></p>
             <p class="card-text" id="genre"><span class="text-success">Genre</span>: </p>
             <p class="card-text" id="rtime"><span class="text-success">Run Time</span>: </p>
             <p class="card-text" id="lang"><span class="text-success">Languages</span>: </p>
             <p class="card-text" id="rated"><span class="text-success">Rated</span>: </p>
             <p class="card-text" id="actors"><span class="text-success">Actors</span>: </p>
             <p class="card-text" id="awards"><span class="text-success">Awards</span>: </p>
-            <p class="card-text" id="coll"><span class="text-success">Boxoffice</span>: </p>
+            <p class="card-text" id="coll"></p>
             <p class="card-text" id="country"><span class="text-success">Country</span>: </p>
-            <p class="card-text" id="dvd"><span class="text-success">DVD</span>: </p>
+            <p class="card-text" id="dvd"></p>
             <p class="card-text" id="director"><span class="text-success">Director</span>: </p>
             <p class="card-text" id="metascore"><span class="text-success">Metascore</span>: </p>
-            <p class="card-text" id="production"><span class="text-success">Production</span>: </p>
-            <p class="card-text" id="website"><span class="text-success">Website</span>: </p>
+            <p class="card-text" id="production"></p>
+            <p class="card-text" id="website"></p>
             <p class="card-text" id="writer"><span class="text-success">Writer</span>: </p>
             <p class="card-text" id="rating"><span class="text-success">Imdb Rating</span>: </p>
             <p class="card-text" id="votes"><span class="text-success">Imdb Votes</span>: </p>
@@ -72,11 +73,28 @@
         let movie_id = url.searchParams.get("movie-id");
         fetch(`http://www.omdbapi.com/?apikey=4034acde&i=${movie_id}&plot=full`).then(res => res.json()).
             then(data => {
+                console.log(data)
                 if (data["Poster"] === "N/A") {
                     data["Poster"] = 'https://previews.123rf.com/images/kaymosk/kaymosk1804/kaymosk180400006/100130939-error-404-page-not-found-error-with-glitch-effect-on-screen-vector-illustration-for-your-design-.jpg';
                 }
                 idSelect("Poster").src = data["Poster"];
                 idSelect("title").innerHTML = data["Title"];
+                if (data['totalSeasons']) {
+                    idSelect("totalSeasons").innerHTML = "<span class='text-success'>Total Seasons</span>: " + data["totalSeasons"];
+
+                }
+                if (data["BoxOffice"]) {
+                    idSelect("coll").innerHTML = '<span class="text-success">Boxoffice</span>: ' + data["BoxOffice"];
+                }
+                if (data["DVD"]) {
+                    idSelect("dvd").innerHTML = '<span class="text-success">DVD</span>: ' + data["DVD"];
+                }
+                if (data["Production"]) {
+                    idSelect("production").innerHTML = '<span class="text-success">Production</span>: ' + data["Production"];
+                }
+                if (data["Website"]) {
+                    idSelect("website").innerHTML = '<span class="text-success">Website</span>: ' + data["Website"];
+                }
                 idSelect("ryear").appendChild(addText(data["Released"]));
                 idSelect("type").appendChild(addText(data["Type"]));
                 idSelect("genre").appendChild(addText(data["Genre"]));
@@ -85,14 +103,10 @@
                 idSelect("lang").appendChild(addText(data["Language"]));
                 idSelect("actors").appendChild(addText(data["Actors"]));
                 idSelect("awards").appendChild(addText(data["Awards"]));
-                idSelect("coll").appendChild(addText(data["BoxOffice"]));
                 idSelect("country").appendChild(addText(data["Country"]));
-                idSelect("dvd").appendChild(addText(data["DVD"]));
                 idSelect("director").appendChild(addText(data["Director"]));
                 idSelect("metascore").appendChild(addText(data["Metascore"]));
                 idSelect("plot").appendChild(addText(data["Plot"]));
-                idSelect("production").appendChild(addText(data["Production"]));
-                idSelect("website").appendChild(addText(data["Website"]));
                 idSelect("writer").appendChild(addText(data["Writer"]));
                 idSelect("rating").appendChild(addText(data["imdbRating"] + "/10"));
                 idSelect("votes").appendChild(addText(data["imdbVotes"]));
