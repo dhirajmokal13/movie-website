@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="script.js"></script>
     <title>Movies Database</title>
 </head>
 <nav class="navbar navbar-expand-lg bg-light">
@@ -71,9 +72,8 @@
         }
         let url = new URL(window.location.href);
         let movie_id = url.searchParams.get("movie-id");
-        fetch(`http://www.omdbapi.com/?apikey=4034acde&i=${movie_id}&plot=full`).then(res => res.json()).
+        fetch(`http://www.omdbapi.com/?apikey=${key}&i=${movie_id}&plot=full`).then(res => res.json()).
             then(data => {
-                console.log(data)
                 if (data["Poster"] === "N/A") {
                     data["Poster"] = 'https://previews.123rf.com/images/kaymosk/kaymosk1804/kaymosk180400006/100130939-error-404-page-not-found-error-with-glitch-effect-on-screen-vector-illustration-for-your-design-.jpg';
                 }
