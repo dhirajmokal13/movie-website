@@ -55,7 +55,7 @@
                         let result = "";
                         let dataLength = data["Search"].length;
                         document.getElementById("pageNO").innerHTML = `Page: 1/${data["totalResults"]/10 | 0}`
-                        document.getElementById("totalRes").innerHTML = `Total Results: ${data["totalResults"]}`;
+                        document.getElementById("totalRes").innerHTML = `Total Result: ${data["totalResults"]}`;
                         for (i = 0; i < dataLength; i++) {
                             if (data["Search"][i]["Poster"] === "N/A") {
                                 data["Search"][i]["Poster"] = "https://previews.123rf.com/images/kaymosk/kaymosk1804/kaymosk180400006/100130939-error-404-page-not-found-error-with-glitch-effect-on-screen-vector-illustration-for-your-design-.jpg";
