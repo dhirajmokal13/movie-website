@@ -54,7 +54,7 @@
                         localStorage.setItem("totalResults", data["totalResults"] / 10);
                         let result = "";
                         let dataLength = data["Search"].length;
-                        document.getElementById("pageNO").innerHTML = `Page: 1/${data["totalResults"]/10 | 0}`
+                        document.getElementById("pageNO").innerHTML = `Page: 1/${checkNumber(data["totalResults"])}`
                         document.getElementById("totalRes").innerHTML = `Total Result: ${data["totalResults"]}`;
                         for (i = 0; i < dataLength; i++) {
                             if (data["Search"][i]["Poster"] === "N/A") {
