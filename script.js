@@ -5,7 +5,7 @@ function paginationData(n) {
     fetch(`http://www.omdbapi.com/?apikey=${key}&s=${localStorage.getItem("mname")}&page=${n}`).then(res => res.json())
         .then(data => {
             if (data["Response"] === "True") {
-                document.getElementById("pageNO").innerHTML = `Page: ${n}/${data["totalResults"]/10 | 0}`;
+                document.getElementById("pageNO").innerHTML = `Page: ${n}/${checkNumber(data["totalResults"])}`;
                 let result = "";
                 let dataLength = data["Search"].length;
                 for (i = 0; i < dataLength; i++) {
