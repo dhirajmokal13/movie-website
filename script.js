@@ -1,6 +1,4 @@
-let key = '4034acde';
-key = 76593128;
-
+let key = '4034acde' || 76593128;
 
 function paginationData(n) {
     console.log(`Current page is ${n}`)
