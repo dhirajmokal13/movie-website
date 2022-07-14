@@ -117,7 +117,7 @@
         document.getElementById("jumppage").addEventListener("focusout",(e) =>{
              e.preventDefault();
              let pageNOfromnput = document.getElementById("jumppage").value;
-             cosnole.log(localStorage.getItem("totalResults"))
+             console.log(localStorage.getItem("totalResults"))
              if(pageNOfromnput >0 && pageNOfromnput<=checkNumber(localStorage.getItem("totalResults"))){
                  console.log(pageNOfromnput);
              }else{
