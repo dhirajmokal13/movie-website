@@ -40,7 +40,7 @@
 <div class="container my-4">
     <div class="row">
         <div class="col"><span class="btn btn-outline-primary mx-2" id="prePagin">&#171;</span></div>
-        <div class="col"><input type="number" class="form-control" type="search" placeholder="Page No" aria-label="Search"></div>
+        <div class="col"><input type="number" class="form-control" id="jumppage" type="search" placeholder="Page No" aria-label="Search"></div>
         <div class="col"><span class="btn btn-outline-primary mx-2" id="pagin">&#187;</span></div>
     </div>
 </div>
@@ -112,6 +112,11 @@
             } else {
                 alert("No more data")
             }
+        })
+        
+        document.getElementById("jumppage").addEventListener("focusout",(e) =>{
+             e.preventDefault();
+            alert("alert")
         })
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
