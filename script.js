@@ -36,3 +36,11 @@ function paginationData(n) {
             }
         }).catch(err => console.error(err));
 }
+
+function checkNumber(num) {
+            if ((num / 10 | 0) !== (num / 10)) {
+                return num / 10 | 0 + 1;
+            } else {
+                return num / 10;
+            }
+        }
