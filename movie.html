@@ -61,7 +61,6 @@
                         localStorage.setItem("totalResults", data["totalResults"] / 10);
                         let result = "";
                         let dataLength = data["Search"].length;
-                        alert(`${checkNumber(data["totalResults"])} & ${data["totalResults"]}`)
                         document.getElementById("pageNO").innerHTML = `Page: 1/${checkNumber(data["totalResults"])}`
                         document.getElementById("totalRes").innerHTML = `Total Result: ${data["totalResults"]}`;
                         for (i = 0; i < dataLength; i++) {
