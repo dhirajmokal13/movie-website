@@ -59,6 +59,7 @@
                     localStorage.setItem("mname", movie);
                     if (data["Response"] === "True") {
                         n=1;
+                        loadingData();
                         console.log(`Total pages is ${data["totalResults"] / 10}`)
                         localStorage.setItem("totalResults", data["totalResults"] / 10);
                         let result = "";
