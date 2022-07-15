@@ -45,3 +45,11 @@ function checkNumber(num) {
             }
            // return num /10 + num%10;
         }
+
+const loadingData = ()=>{
+    document.getElementById("result").innerHTML = `<div class="text-center">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>`;
+}
