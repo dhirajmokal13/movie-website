@@ -2,6 +2,7 @@ let key = '4034acde' || 76593128;
 
 function paginationData(n) {
     console.log(`Current page is ${n}`)
+    document.getElementById("jumppage").value = n;
     fetch(`http://www.omdbapi.com/?apikey=${key}&s=${localStorage.getItem("mname")}&page=${n}`).then(res => res.json())
         .then(data => {
             if (data["Response"] === "True") {
