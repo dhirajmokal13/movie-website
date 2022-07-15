@@ -47,7 +47,7 @@ function checkNumber(num) {
         }
 
 const loadingData = ()=>{
-    document.getElementById("result").innerHTML = `<div class="text-center my-7" style="margin-bottom:10rem">
+    document.getElementById("result").innerHTML = `<div class="text-center" style="margin-bottom:10rem; margin-top:10rem;">
   <div class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
   </div>
