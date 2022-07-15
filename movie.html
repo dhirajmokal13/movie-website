@@ -128,6 +128,7 @@
             let pageNOfromnput = document.getElementById("jumppage").value;
             if (pageNOfromnput > 0 && pageNOfromnput <= numConvert(localStorage.getItem("totalResults"))) {
                 paginationData(pageNOfromnput);
+                n = pageNOfromnput;
             } else {
                 swal("Error", "Enter valid page number", "error");
             }
