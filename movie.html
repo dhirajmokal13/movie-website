@@ -57,6 +57,7 @@
                 .then(data => {
                     localStorage.setItem("mname", movie);
                     if (data["Response"] === "True") {
+                        let n = 1;
                         console.log(`Total pages is ${data["totalResults"] / 10}`)
                         localStorage.setItem("totalResults", data["totalResults"] / 10);
                         let result = "";
@@ -96,7 +97,7 @@
             document.getElementById("movie").value = localStorage.getItem("mname");
             document.getElementById("search").click();
         }
-        let n = 1;
+        //<!--let n = 1;-->
         document.getElementById("pagin").addEventListener("click", (e) => {
             let no = localStorage.getItem("totalResults");
             if (n < no) {
