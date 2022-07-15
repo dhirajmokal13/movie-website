@@ -102,6 +102,7 @@
         document.getElementById("pagin").addEventListener("click", (e) => {
             let no = localStorage.getItem("totalResults");
             if (n < no) {
+                loadingData();
                 n++;
                 paginationData(n);
             } else {
@@ -112,6 +113,7 @@
         document.getElementById("prePagin").addEventListener("click", (e) => {
             let no = localStorage.getItem("totalResults");
             if (n > 1) {
+                loadingData();
                 n--;
                 paginationData(n);
             } else {
@@ -129,6 +131,7 @@
             e.preventDefault();
             let pageNOfromnput = document.getElementById("jumppage").value;
             if (pageNOfromnput > 0 && pageNOfromnput <= numConvert(localStorage.getItem("totalResults"))) {
+                loadingData();
                 paginationData(pageNOfromnput);
                 n = pageNOfromnput;
             } else {
