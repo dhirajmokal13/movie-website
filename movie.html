@@ -107,7 +107,7 @@
                 n++;
                 paginationData(n);
             } else {
-                alert("No more data")
+                swal("Error", "No more data", "error");
             }
         })
 
@@ -118,7 +118,7 @@
                 n--;
                 paginationData(n);
             } else {
-                alert("No more data")
+                swal("Error", "No more data", "error");
             }
         })
         function numConvert(num) {
