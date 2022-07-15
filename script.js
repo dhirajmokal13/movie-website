@@ -38,9 +38,5 @@ function paginationData(n) {
 }
 
 function checkNumber(num) {
-            if ((num / 10 | 0) !== (num / 10)) {
-                return num / 10 | 0 + 1;
-            } else {
-                return num / 10;
-            }
+            return num /10 + num%10;
         }
