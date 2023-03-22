@@ -31,44 +31,67 @@
         }
     </style>
 </head>
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="https://dhirajmokal13.github.io/movie-website/movie.html">Movie Data</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page"
-                        href="https://dhirajmokal13.github.io/movie-website/movie.html">Home</a>
-                </li>
-            </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" id="movie" placeholder="Search Movie">
-                <button class="btn btn-outline-success" id="search">Search</button>
-            </form>
-        </div>
-    </div>
-</nav>
-<div class="container mt-4"><span class="text-success" id="totalRes"></span> <span id="pageNO"></span></span></div>
-<div id="result" class="container">
-    <h1>Movis Details</h1>
-</div>
-<div class="container my-4">
-    <div class="row">
-        <div class="col"><span class="btn btn-outline-primary mx-2 modal-dialog-centered" id="prePagin">&#171;</span>
-        </div>
-        <div class="col"><input type="number" class="form-control" id="jumppage" type="search" placeholder="Page No"
-                aria-label="Search"></div>
-        <div class="col"><span class="btn btn-outline-primary mx-2 modal-dialog-centered" id="pagin">&#187;</span></div>
-    </div>
-</div>
 
 <body>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="https://dhirajmokal13.github.io/movie-website/movie.html">Movie Data</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page"
+                            href="https://dhirajmokal13.github.io/movie-website/movie.html">Home</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" id="movie" placeholder="Search Movie">
+                    <button class="btn btn-outline-success" id="search">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4"><span class="text-success" id="totalRes"></span> <span id="pageNO"></span></span>
+        <div class="row mt-2">
+            <div class="col-md-4 col-lg-3 mt-2">
+                <select class="form-select" aria-label="Default select example" id="typeOfMovie">
+                    <option value="" selected>Select Type</option>
+                    <option value="movie">Movie</option>
+                    <option value="series">Series</option>
+                    <option value="episode">Episode</option>
+                </select>
+            </div>
+            <div class="col-md-4 col-lg-3 mt-2">
+                <input type="number" class="form-control" placeholder="Release Year" min="1900" id="releaseYear">
+            </div>
+            <div class="col-md-4 col-lg-3 mt-2">
+                <button class="btn btn-outline-success" id="clrfilter">Clear Filters</button>
+            </div>
+        </div>
+    </div>
+    <div id="result" class="container">
+        <h1>Movis Details</h1>
+    </div>
+    <div class="container my-4">
+        <div class="row">
+            <div class="col"><span class="btn btn-outline-primary mx-2 modal-dialog-centered"
+                    id="prePagin">&#171;</span>
+            </div>
+            <div class="col"><input type="number" class="form-control" id="jumppage" type="search" placeholder="Page No"
+                    aria-label="Search"></div>
+            <div class="col"><span class="btn btn-outline-primary mx-2 modal-dialog-centered" id="pagin">&#187;</span>
+            </div>
+        </div>
+    </div>
+
     <script>
         let n = 1;
+        let typeOfMovie = "";
+        let releaseYear = "";
         document.getElementById("search").addEventListener("click", (e) => {
             e.preventDefault();
             let movie = document.getElementById("movie").value;
@@ -108,16 +131,85 @@
                             }
                         }
                         document.getElementById("result").innerHTML = result;
+                        document.getElementById("jumppage").value = `1`;
                     } else {
                         swal("Error", data["Error"], "error");
                     }
                 }).catch(err => console.error(err));
         });
+
         if (localStorage.getItem("mname")) {
             console.log(`Previous Search is : ${localStorage.getItem("mname")}`);
             document.getElementById("movie").value = localStorage.getItem("mname");
             document.getElementById("search").click();
         }
+
+        const filter = () => {
+            let movie = document.getElementById("movie").value;
+            let link = `http://www.omdbapi.com/?apikey=${key}&s=${movie}&page=1&type=${typeOfMovie}&y=${releaseYear}`;
+            fetch(link).then(res => res.json())
+                .then(data => {
+                    if (data["Response"] === "True") {
+                        n = 1;
+                        loadingData();
+                        console.log(`Total pages is ${data["totalResults"] / 10}`)
+                        localStorage.setItem("totalResults", data["totalResults"] / 10);
+                        let result = "";
+                        let dataLength = data["Search"].length;
+                        document.getElementById("pageNO").innerHTML = `Page: 1/${checkNumber(data["totalResults"])}`
+                        document.getElementById("totalRes").innerHTML = `Total Result: ${data["totalResults"]}`;
+                        for (i = 0; i < dataLength; i++) {
+                            if (data["Search"][i]["Poster"] === "N/A") {
+                                data["Search"][i]["Poster"] = "https://previews.123rf.com/images/kaymosk/kaymosk1804/kaymosk180400006/100130939-error-404-page-not-found-error-with-glitch-effect-on-screen-vector-illustration-for-your-design-.jpg";
+                            }
+                            if (i % 3 === 0) {
+                                result += `<div class="row my-2">`;
+                            }
+                            result += `<div class="col mt-3 ms-3"><div class="card" style="width: 18rem; box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
+                                   <img src="${data["Search"][i]["Poster"]}" alt="Image not Found" class="card-img-top">
+                                   <div class="card-body">
+                                     <h5 class="card-title" title="Name of the movie">${data["Search"][i]["Title"]}</h5>
+                                     <hr>
+                                    <p class="card-text" title=Realease of the movie"><span class="text-success">Release Year</span>: ${data["Search"][i]["Year"]}</p>
+                                    <p class="card-text" title="Type of the Content"><span class="text-success">Type</span>: ${data["Search"][i]["Type"]}</p>
+                                     <hr>
+                                     <a href="movie-details.html?movie-id=${data["Search"][i]["imdbID"]}" class="btn btn-outline-success">More Details</a>
+                                   </div>
+                                   </div></div>`;
+                            if (i % 3 === 2) {
+                                result += `</div>`;
+                            }
+                        }
+                        document.getElementById("result").innerHTML = result;
+                        document.getElementById("jumppage").value = `1`;
+                    } else {
+                        swal("Error", data["Error"], "error");
+                    }
+                }).catch(err => console.error(err));
+        }
+
+        document.getElementById('clrfilter').onclick = () => {
+            typeOfMovie = '';
+            releaseYear = '';
+            document.getElementById('typeOfMovie').value = "";
+            document.getElementById('releaseYear').value = "";
+            filter();
+        }
+
+        document.getElementById('typeOfMovie').onchange = e => {
+            typeOfMovie = e.target.value;
+            filter();
+        }
+
+        document.getElementById("releaseYear").onchange = e => {
+            if (e.target.value >= 1900) {
+                releaseYear = e.target.value;
+                filter();
+            } else {
+                swal("Error", "Enter valid Release Yeat", "error");
+            }
+        }
+
         //<!--let n = 1;-->
         document.getElementById("pagin").addEventListener("click", (e) => {
             let no = localStorage.getItem("totalResults");
@@ -140,6 +232,7 @@
                 swal("Error", "No more data", "error");
             }
         })
+
         function numConvert(num) {
             if ((num | 0) != (num)) {
                 return (num | 0) + 1;
@@ -147,6 +240,7 @@
                 return num;
             }
         }
+
         document.getElementById("jumppage").addEventListener("focusout", (e) => {
             e.preventDefault();
             let pageNOfromnput = document.getElementById("jumppage").value;
