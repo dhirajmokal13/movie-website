@@ -1,5 +1,4 @@
 # Movie-Website
-<h1>hi</h1>
 A user-friendly and informative website that provides movie details such as:
 
 - Release Date
