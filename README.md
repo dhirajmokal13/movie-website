@@ -1,5 +1,5 @@
 # Movie-Website
-A user-friendly and informative website that provides movie details such as:
+A user-friendly and informative website that provides Box Office such as:
 
 - Release Date
 - Run-Time
